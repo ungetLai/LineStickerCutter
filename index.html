@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖片分割工具</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>圖片分割工具</h1>
+        <div class="upload-section">
+            <div class="split-options">
+                <label for="splitMode">選擇分割方式：</label>
+                <select id="splitMode">
+                    <option value="2x2">2x2 (四等分)</option>
+                    <option value="3x3">3x3 (九等分)</option>
+                </select>
+            </div>
+            <input type="file" id="imageInput" accept="image/*">
+            <button id="splitButton">分割圖片</button>
+        </div>
+        <div class="preview-section">
+            <div class="original-image">
+                <h2>原始圖片</h2>
+                <img id="originalPreview" src="" alt="原始圖片預覽">
+            </div>
+            <div class="split-images">
+                <h2>分割後的圖片</h2>
+                <div id="gridContainer" class="grid-container">
+                    <!-- 分割後的圖片將在這裡動態生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
