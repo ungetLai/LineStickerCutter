@@ -98,10 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const zip = new JSZip();
         
-        processedImages.forEach(part => {
+        // 確保所有分割後的圖片都被添加到 ZIP 中
+        for (const part of processedImages) {
             const base64Data = part.data.split(',')[1];
             zip.file(part.name, base64Data, { base64: true });
-        });
+        }
 
         const content = await zip.generateAsync({ type: 'blob' });
         const url = URL.createObjectURL(content);
