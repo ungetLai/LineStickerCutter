@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LineStickerCutter - 批量處理</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>LineStickerCutter - 批量處理</h1>
+        <div class="upload-section">
+            <input type="file" id="imageInput" multiple accept="image/*">
+            <div class="split-options">
+                <label>
+                    <input type="radio" name="splitMode" value="2x2" checked>
+                    2x2 (四等分)
+                </label>
+                <label>
+                    <input type="radio" name="splitMode" value="3x3">
+                    3x3 (九等分)
+                </label>
+            </div>
+            <button id="splitButton">分割圖片</button>
+        </div>
+        <div id="previewSection" class="preview-section">
+            <h2>預覽</h2>
+            <div id="previewContainer"></div>
+        </div>
+        <div id="downloadSection" class="download-section">
+            <button id="downloadZip">下載所有圖片 (ZIP)</button>
+        </div>
+    </div>
+    <script src="script2.js"></script>
+</body>
+</html> 
