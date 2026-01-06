@@ -7,15 +7,23 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <nav class="nav-menu">
+        <a href="index.html" class="active">圖片分割工具</a>
+        <a href="index2.html">圖片分割工具(批次多張)</a>
+        <a href="index3.html">圖片去背工具</a>
+    </nav>
     <div class="container">
         <h1>圖片分割工具</h1>
         <div class="upload-section">
             <div class="split-options">
-                <label for="splitMode">選擇分割方式：</label>
-                <select id="splitMode">
-                    <option value="2x2">2x2 (四等分)</option>
-                    <option value="3x3">3x3 (九等分)</option>
-                </select>
+                <label>
+                    直列（列數）：
+                    <input type="number" id="columns" min="1" max="10" value="2">
+                </label>
+                <label>
+                    橫列（行數）：
+                    <input type="number" id="rows" min="1" max="10" value="2">
+                </label>
             </div>
             <input type="file" id="imageInput" accept="image/*">
             <button id="splitButton">分割圖片</button>

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let processedImages = [];
 
     // 處理圖片分割
-    async function processImage(file, splitMode) {
+    async function processImage(file, columns, rows) {
         return new Promise((resolve) => {
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -16,15 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const ctx = canvas.getContext('2d');
                     const parts = [];
                     
-                    const gridSize = splitMode === '2x2' ? 2 : 3;
-                    const partWidth = img.width / gridSize;
-                    const partHeight = img.height / gridSize;
+                    const partWidth = img.width / columns;
+                    const partHeight = img.height / rows;
                     
                     canvas.width = partWidth;
                     canvas.height = partHeight;
                     
-                    for (let y = 0; y < gridSize; y++) {
-                        for (let x = 0; x < gridSize; x++) {
+                    for (let y = 0; y < rows; y++) {
+                        for (let x = 0; x < columns; x++) {
                             ctx.clearRect(0, 0, partWidth, partHeight);
                             ctx.drawImage(
                                 img,
@@ -41,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const partData = canvas.toDataURL('image/png');
                             parts.push({
                                 data: partData,
-                                name: `${file.name.split('.')[0]}_${y * gridSize + x + 1}.png`
+                                name: `${file.name.split('.')[0]}_${y * columns + x + 1}.png`
                             });
                         }
                     }
@@ -72,10 +71,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // 處理所有圖片
     splitButton.addEventListener('click', async () => {
         const files = imageInput.files;
-        const splitMode = document.querySelector('input[name="splitMode"]:checked').value;
+        const columns = parseInt(document.getElementById('columns').value);
+        const rows = parseInt(document.getElementById('rows').value);
         
         if (files.length === 0) {
             alert('請選擇至少一張圖片');
+            return;
+        }
+        
+        if (columns < 1 || rows < 1) {
+            alert('直列和橫列數量必須大於0');
             return;
         }
 
@@ -83,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         processedImages = [];
 
         for (const file of files) {
-            const parts = await processImage(file, splitMode);
+            const parts = await processImage(file, columns, rows);
             processedImages.push(...parts);
             showPreview(parts);
         }
