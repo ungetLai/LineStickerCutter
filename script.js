@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const imageInput = document.getElementById('imageInput');
     const splitButton = document.getElementById('splitButton');
-    const splitMode = document.getElementById('splitMode');
     const originalPreview = document.getElementById('originalPreview');
     const gridContainer = document.getElementById('gridContainer');
 
@@ -22,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function createGridItems(count) {
+    function createGridItems(count, columns, rows) {
         gridContainer.innerHTML = '';
-        gridContainer.className = `grid-container grid-${splitMode.value}`;
+        gridContainer.className = `grid-container grid-${columns}x${rows}`;
         
         for (let i = 0; i < count; i++) {
             const gridItem = document.createElement('div');
@@ -51,23 +50,29 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const mode = splitMode.value;
-        const gridSize = mode === '2x2' ? 2 : 3;
-        const totalParts = gridSize * gridSize;
+        const columns = parseInt(document.getElementById('columns').value);
+        const rows = parseInt(document.getElementById('rows').value);
         
-        createGridItems(totalParts);
+        if (columns < 1 || rows < 1) {
+            alert('直列和橫列數量必須大於0');
+            return;
+        }
+        
+        const totalParts = columns * rows;
+        
+        createGridItems(totalParts, columns, rows);
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         
         // 計算每個部分的寬度和高度
-        const partWidth = originalImage.width / gridSize;
-        const partHeight = originalImage.height / gridSize;
+        const partWidth = originalImage.width / columns;
+        const partHeight = originalImage.height / rows;
 
         // 分割圖片並創建下載連結
         for (let i = 0; i < totalParts; i++) {
-            const row = Math.floor(i / gridSize);
-            const col = i % gridSize;
+            const row = Math.floor(i / columns);
+            const col = i % columns;
             
             canvas.width = partWidth;
             canvas.height = partHeight;
